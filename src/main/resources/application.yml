@@ -1,0 +1,20 @@
+#数据库配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/day_0827
+    username: root
+    password: lzy10020
+
+#mybatis的相关配置
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: mapper/*.xml
+  #onfig-location和configuration只能配置其中一个
+  #config-location: classpath:mybatis.xml
+
+server:
+  port: 8080

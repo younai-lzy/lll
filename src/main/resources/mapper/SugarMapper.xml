@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sina.mapper.SugarMapper">
+
+    <select id="getList1" resultType="com.sina.bean.Sugar">
+        select  bp.name,sum(o.final_total_amount) `value`  from order_info o
+        left join  base_province bp on o.province_id = bp.id
+        group by bp.name order by  `value` desc;
+    </select>
+
+    <select id="getList2" resultType="com.sina.bean.Sugar">
+        select  bt.name ,sum(o.final_total_amount) `value`  from order_info o
+         left join order_detail od on o.id = od.order_id
+         left join sku_info si on od.sku_id = si.id
+         left join  base_trademark bt on si.tm_id = bt.id
+        group by  bt.name order by  `value` ;
+    </select>
+
+    <select id="getList3" resultType="com.sina.bean.Sugar">
+        select  bc1.name ,sum(o.final_total_amount) `value`  from order_info o
+          left join order_detail od on o.id = od.order_id
+          left join sku_info si on od.sku_id = si.id
+          left join base_category3 b on si.category3_id = b.id
+          left join base_category2 c on b.category2_id = c.id
+          left join base_category1 bc1 on bc1.id = c.category1_id
+        group by   bc1.name order by  `value` desc;
+    </select>
+
+    <select id="getList4" resultType="com.sina.bean.SugarTwo">
+        select '用户数（人）' type,a.newNum,b.oldNum from
+        (select  count(*) newNum from  user_info where timestampdiff(month,create_time,now()) &lt; 1) a,
+        (select  count(*) oldNum  from  user_info where timestampdiff(month,create_time,now()) >= 1)b
+    </select>
+</mapper>
